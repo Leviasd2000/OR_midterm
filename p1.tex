@@ -1,0 +1,117 @@
+\documentclass[12pt, a4paper]{article}
+
+% ====== Packages ======
+\usepackage{amsmath, amssymb, amsthm} % Math symbols and environments
+\usepackage{geometry} % Page layout
+\usepackage{tikz}
+\usepackage{listings}
+\geometry{top=1in, bottom=1in, left=1in, right=1in}
+\usepackage{graphicx} % For inserting images (Problem 2)
+\usepackage{algorithm} % For pseudocode (Problem 3)
+\usepackage{algpseudocode} 
+\usepackage{enumerate} % For customizing lists
+\usepackage{xeCJK} 
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{float}
+
+% ====== Custom Commands ======
+\newcommand{\problem}[1]{\vspace{0.5cm}\noindent\textbf{Problem #1.}}
+\newcommand{\appdx}[1]{\vspace{0.5cm}\noindent\textbf{Appendix #1.}}
+\newcommand{\solution}{\vspace{0.2cm}\noindent\textbf{Solution:}\par}
+
+% 定義 Python 顏色設定
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    frame=single,
+    breaklines=true
+}
+
+% ====== Title & Author ======
+\title{Operations Research, Spring 2026 (114-2) \\ Midterm Project}
+\author{Student Name \& ID: 李承憲:R13723065, 李傭堯:R13723045}
+\date{\today}
+
+\begin{document}
+
+% --- 請確保您的 preamble 區塊有載入以下套件 ---
+% \usepackage{booktabs}
+% \usepackage{tabularx}
+% \usepackage{float}
+% ---------------------------------------------
+
+\subsection*{Optimal Operational Plan: Instance 05}
+
+\textbf{Total Summary} \\
+This plan outlines the optimal vehicle dispatching strategy. By successfully fulfilling 8 out of 10 orders (80\% fulfillment rate), the system maximizes resource utilization and generates an \textbf{expected total profit of \$106,800}, while strictly adhering to relocation budget and time constraints.
+
+\vspace{1em}
+
+\subsubsection*{1. Order Fulfillment Strategy}
+\textit{Action Items:} 
+\begin{itemize}
+    \vspace{-0.5em}
+    \setlength{\itemsep}{0pt}
+    \item \textbf{Cancellations:} Notify clients of \textbf{Orders 01 and 02} regarding their cancellations due to capacity optimization.
+    \item \textbf{Upgrades:} Inform the client of \textbf{Order 06} about their complimentary upgrade to a Level 2 vehicle.
+\end{itemize}
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{l c c c c c}
+        \toprule
+        \textbf{Order ID} & \textbf{Status} & \textbf{Assigned Vehicle} & \textbf{Requested Level} & \textbf{Assigned Level} & \textbf{Free Upgrade} \\
+        \midrule
+        Order 01 & Rejected & -          & L1 & -  & - \\
+        Order 02 & Rejected & -          & L1 & -  & - \\
+        Order 03 & Accepted & Vehicle 03 & L1 & L1 & No \\
+        Order 04 & Accepted & Vehicle 01 & L1 & L1 & No \\
+        Order 05 & Accepted & Vehicle 06 & L2 & L2 & No \\
+        Order 06 & Accepted & Vehicle 04 & L1 & L2 & \textbf{Yes} \\
+        Order 07 & Accepted & Vehicle 05 & L2 & L2 & No \\
+        Order 08 & Accepted & Vehicle 06 & L2 & L2 & No \\
+        Order 09 & Accepted & Vehicle 04 & L2 & L2 & No \\
+        Order 10 & Accepted & Vehicle 02 & L1 & L1 & No \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\vspace{1em}
+
+\subsubsection*{2. Fleet Relocation Schedule}
+
+\begin{table}[H]
+    \centering
+    \footnotesize 
+    \begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash}p{2.2cm} c c c c X@{}}
+        \toprule
+        \textbf{Veh.} & \textbf{Task Type} & \textbf{From} & \textbf{To} & \textbf{Departs} & \textbf{Arrives} & \textbf{Task Description} \\
+        \midrule
+        V01 & Standby & S1 & S1 & 01/03 12:00 & 01/03 12:00 & Fulfill initial order (Order 04) \\
+        \addlinespace
+        V02 & Relocation & S2 & S4 & 01/01 02:00 & 01/01 06:00 & Fulfill initial order (Order 10) \\
+        \addlinespace
+        V03 & Relocation & S3 & S5 & 01/02 00:00 & 01/02 03:30 & Fulfill initial order (Order 03) \\
+        \addlinespace
+        V04 & Relocation & S5 & S3 & 01/01 16:00 & 01/01 19:30 & Fulfill initial order (Order 09) \\
+        V04 & Relocation & S4 & S3 & 01/04 15:30 & 01/04 18:30 & Relocate for Order 06 after completing Order 09 \\
+        \addlinespace
+        V05 & Relocation & S4 & S2 & 01/01 23:30 & 01/02 03:30 & Fulfill initial order (Order 07) \\
+        \addlinespace
+        V06 & Standby & S6 & S6 & 01/01 00:00 & 01/01 00:00 & Fulfill initial order (Order 05) \\
+        V06 & Consecutive Service & S6 & S6 & 01/04 20:00 & 01/04 20:00 & Proceed to Order 08 after completing Order 05 \\
+        \bottomrule
+        \multicolumn{7}{@{}l}{\scriptsize * \textit{Note: Veh. = Vehicle, S = Station.}} \\
+    \end{tabularx}
+\end{table}
+
+\end{document}
